@@ -1,17 +1,98 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <h1 className="text-5xl font-bold text-blue-600">
-        Twilight-HealthCare
-      </h1>
-    </div>
-  )
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import DoctorDashboard from "./pages/doctor/DoctorDashboard";
+import PatientDashboard from "./pages/patient/PatientDashboard";
+
+import { AuthProvider, useAuth } from "./context/AuthContext";
+
+
+function ProtectedRoute({ children, role }) {
+
+    const { user, isAuthenticated } = useAuth();
+
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace />;
+    }
+
+    if (role && user?.role !== role) {
+        return <Navigate to="/" replace />;
+    }
+
+    return children;
 }
 
-export default App
+
+function AppRoutes() {
+
+    return (
+        <Routes>
+
+            <Route
+                path="/"
+                element={<Home />}
+            />
+
+            <Route
+                path="/login"
+                element={<Login />}
+            />
+
+            <Route
+                path="/register"
+                element={<Register />}
+            />
+
+            <Route
+                path="/admin/dashboard"
+                element={
+                    <ProtectedRoute role="ADMIN">
+                        <AdminDashboard />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/doctor/dashboard"
+                element={
+                    <ProtectedRoute role="DOCTOR">
+                        <DoctorDashboard />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/patient/dashboard"
+                element={
+                    <ProtectedRoute role="PATIENT">
+                        <PatientDashboard />
+                    </ProtectedRoute>
+                }
+            />
+
+        </Routes>
+    );
+}
+
+
+function App() {
+
+    return (
+        <BrowserRouter>
+
+            <AuthProvider>
+
+                <AppRoutes />
+
+            </AuthProvider>
+
+        </BrowserRouter>
+    );
+}
+
+
+export default App;
