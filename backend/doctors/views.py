@@ -1,8 +1,6 @@
-from django.shortcuts import render
-
-# Create your views here.
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import PermissionDenied
 
 from .models import DoctorProfile
 from .serializers import DoctorProfileSerializer
@@ -14,6 +12,17 @@ class MyDoctorProfileView(generics.RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
-        return DoctorProfile.objects.get(
-            user=self.request.user
+
+        if self.request.user.role != "DOCTOR":
+            raise PermissionDenied(
+                "Only doctors can access this profile."
+            )
+
+        profile, created = DoctorProfile.objects.get_or_create(
+            user=self.request.user,
+            defaults={
+                "specialization": "General Medicine"
+            }
         )
+
+        return profile
