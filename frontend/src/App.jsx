@@ -1,97 +1,119 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
+import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
+
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import DoctorDashboard from "./pages/doctor/DoctorDashboard";
 import PatientDashboard from "./pages/patient/PatientDashboard";
+import PatientProfile from "./pages/patient/PatientProfile";
+
 
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 
+
 function ProtectedRoute({ children, role }) {
 
-    const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated } = useAuth();
 
-    if (!isAuthenticated) {
-        return <Navigate to="/login" replace />;
-    }
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
 
-    if (role && user?.role !== role) {
-        return <Navigate to="/" replace />;
-    }
+  if (role && user?.role !== role) {
+    return <Navigate to="/" replace />;
+  }
 
-    return children;
+  return children;
 }
 
 
 function AppRoutes() {
 
-    return (
-        <Routes>
+  return (
+    <Routes>
 
-            <Route
-                path="/"
-                element={<Home />}
-            />
+      <Route
+        path="/"
+        element={<Home />}
+      />
 
-            <Route
-                path="/login"
-                element={<Login />}
-            />
+      <Route
+        path="/login"
+        element={<Login />}
+      />
 
-            <Route
-                path="/register"
-                element={<Register />}
-            />
+      <Route
+        path="/register"
+        element={<Register />}
+      />
 
-            <Route
-                path="/admin/dashboard"
-                element={
-                    <ProtectedRoute role="ADMIN">
-                        <AdminDashboard />
-                    </ProtectedRoute>
-                }
-            />
+      <Route
+        path="/admin/dashboard"
+        element={
+          <ProtectedRoute role="ADMIN">
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
 
-            <Route
-                path="/doctor/dashboard"
-                element={
-                    <ProtectedRoute role="DOCTOR">
-                        <DoctorDashboard />
-                    </ProtectedRoute>
-                }
-            />
+      <Route
+        path="/doctor/dashboard"
+        element={
+          <ProtectedRoute role="DOCTOR">
+            <DoctorDashboard />
+          </ProtectedRoute>
+        }
+      />
 
-            <Route
-                path="/patient/dashboard"
-                element={
-                    <ProtectedRoute role="PATIENT">
-                        <PatientDashboard />
-                    </ProtectedRoute>
-                }
-            />
+      <Route
+        path="/patient/dashboard"
+        element={
+          <ProtectedRoute role="PATIENT">
+            <PatientDashboard />
+          </ProtectedRoute>
+        }
+      />
 
-        </Routes>
-    );
+      <Route
+        path="/patient/profile"
+        element={
+          <ProtectedRoute role="PATIENT">
+            <PatientProfile />
+          </ProtectedRoute>
+        }
+      />
+
+    </Routes>
+
+    
+
+
+
+  );
 }
 
 
 function App() {
 
-    return (
-        <BrowserRouter>
+  return (
+    <BrowserRouter>
 
-            <AuthProvider>
+      <AuthProvider>
 
-                <AppRoutes />
+      <Navbar />
+        <AppRoutes />
 
-            </AuthProvider>
+      </AuthProvider>
 
-        </BrowserRouter>
-    );
+    </BrowserRouter>
+
+
+  );
 }
 
 

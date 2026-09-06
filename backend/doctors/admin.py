@@ -1,10 +1,20 @@
 from django.contrib import admin
-from .models import DoctorProfile
+from .models import DoctorProfile, Department
+
+
+@admin.register(Department)
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = (
+        "name",
+        "description",
+    )
+    search_fields = (
+        "name",
+    )
 
 
 @admin.register(DoctorProfile)
 class DoctorProfileAdmin(admin.ModelAdmin):
-
     list_display = (
         "user",
         "specialization",

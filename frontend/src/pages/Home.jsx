@@ -5,7 +5,7 @@ function Home() {
     return (
         <div className="min-h-screen bg-gray-100">
 
-            <nav className="bg-white shadow">
+            {/* <nav className="bg-white shadow">
 
                 <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
@@ -33,7 +33,7 @@ function Home() {
 
                 </div>
 
-            </nav>
+            </nav> */}
 
 
             <section className="max-w-7xl mx-auto px-6 py-24 text-center">

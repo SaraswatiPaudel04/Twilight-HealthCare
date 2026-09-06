@@ -31,25 +31,23 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
 
-    # Third party
-    'rest_framework',
-    'corsheaders',
+    "rest_framework",
+    "corsheaders",
 
-    # Our apps
-    'accounts',
+    "accounts",
     "patients.apps.PatientsConfig",
     "doctors.apps.DoctorsConfig",
-    'appointments',
-    'medical_records',
-    'prescriptions',
-    'billing',
+    "appointments",
+    "medical_records",
+    "prescriptions",
+    "billing",
 ]
 
 MIDDLEWARE = [
