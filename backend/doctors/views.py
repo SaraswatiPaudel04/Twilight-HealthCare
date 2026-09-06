@@ -26,3 +26,13 @@ class MyDoctorProfileView(generics.RetrieveUpdateAPIView):
         )
 
         return profile
+
+class DoctorListView(generics.ListAPIView):
+    serializer_class = DoctorProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return DoctorProfile.objects.select_related(
+            "user",
+            "department",
+        ).all()

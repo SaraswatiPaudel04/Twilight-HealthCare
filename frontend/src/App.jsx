@@ -15,6 +15,7 @@ import PatientProfile from "./pages/patient/PatientProfile";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 import DoctorProfile from "./pages/doctor/DoctorProfile";
+import DoctorList from "./pages/patient/DoctorList";
 
 function ProtectedRoute({ children, role }) {
 
@@ -93,6 +94,15 @@ function AppRoutes() {
         element={
           <ProtectedRoute allowedRoles={["DOCTOR"]}>
             <DoctorProfile />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/patient/doctors"
+        element={
+          <ProtectedRoute allowedRoles={["PATIENT"]}>
+            <DoctorList />
           </ProtectedRoute>
         }
       />
