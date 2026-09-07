@@ -12,7 +12,6 @@ function Register() {
         last_name: "",
         phone: "",
         password: "",
-        role: "PATIENT",
     });
 
     const [error, setError] = useState("");
@@ -177,27 +176,7 @@ function Register() {
                         />
                     </div>
 
-                    <div>
-                        <label className="block text-sm font-medium mb-2">
-                            Role
-                        </label>
-
-                        <select
-                            name="role"
-                            value={formData.role}
-                            onChange={handleChange}
-                            className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                        >
-                            <option value="PATIENT">
-                                Patient
-                            </option>
-
-                            <option value="DOCTOR">
-                                Doctor
-                            </option>
-                        </select>
-                    </div>
-
+                    {/* Password Field */}
                     <div className="md:col-span-2">
                         <label className="block text-sm font-medium mb-2">
                             Password

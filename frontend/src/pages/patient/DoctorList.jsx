@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import API from "../../services/api";
 
 const DoctorList = () => {
     const [doctors, setDoctors] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
+    const [search, setSearch] = useState("");
+    const [department, setDepartment] = useState("All");
 
     useEffect(() => {
         fetchDoctors();
@@ -14,120 +14,208 @@ const DoctorList = () => {
         try {
             const response = await API.get("doctor/list/");
             setDoctors(response.data);
-        } catch (err) {
-            console.error(err);
-            setError("Unable to load doctors.");
-        } finally {
-            setLoading(false);
+        } catch (error) {
+            console.error("Error fetching doctors:", error);
         }
     };
 
-    if (loading) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <p className="text-gray-600">
-                    Loading doctors...
-                </p>
-            </div>
-        );
-    }
+    // Get unique departments
+    const departments = [
+        "All",
+        ...new Set(
+            doctors
+                .map((doctor) => doctor.department_name)
+                .filter(Boolean)
+        ),
+    ];
 
-    if (error) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <p className="text-red-600">
-                    {error}
-                </p>
-            </div>
-        );
-    }
+    // Search + filter
+    const filteredDoctors = doctors.filter((doctor) => {
+        const searchText = search.toLowerCase();
+
+        const doctorName =
+            `${doctor.first_name || ""} ${doctor.last_name || ""}`.toLowerCase();
+
+        const specialization =
+            (doctor.specialization || "").toLowerCase();
+
+        const matchesSearch =
+            doctorName.includes(searchText) ||
+            specialization.includes(searchText);
+
+        const matchesDepartment =
+            department === "All" ||
+            doctor.department_name === department;
+
+        return matchesSearch && matchesDepartment;
+    });
 
     return (
-        <div className="min-h-screen bg-gray-50 py-10 px-4">
+        <div className="min-h-screen bg-gray-50 px-6 py-10">
+            <div className="max-w-7xl mx-auto">
 
-            <div className="max-w-6xl mx-auto">
-
+                {/* Header */}
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-800">
-                        Our Doctors
+                        Find a Doctor
                     </h1>
 
                     <p className="text-gray-500 mt-2">
-                        Find the right doctor for your healthcare needs.
+                        Search for doctors by name, specialization, or department.
                     </p>
                 </div>
 
-                {doctors.length === 0 ? (
-                    <div className="bg-white rounded-xl shadow p-8 text-center">
-                        <p className="text-gray-500">
-                            No doctors available.
+                {/* Search and Filter */}
+                <div className="bg-white rounded-xl shadow-sm p-5 mb-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                        {/* Search */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Search Doctor
+                            </label>
+
+                            <input
+                                type="text"
+                                placeholder="Search by name or specialization..."
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+
+                        {/* Department */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Department
+                            </label>
+
+                            <select
+                                value={department}
+                                onChange={(e) =>
+                                    setDepartment(e.target.value)
+                                }
+                                className="w-full border border-gray-300 rounded-lg px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                {departments.map((dept) => (
+                                    <option key={dept} value={dept}>
+                                        {dept}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
+                {/* Results count */}
+                <div className="mb-5">
+                    <p className="text-gray-600">
+                        Showing{" "}
+                        <span className="font-semibold">
+                            {filteredDoctors.length}
+                        </span>{" "}
+                        doctor
+                        {filteredDoctors.length !== 1 ? "s" : ""}
+                    </p>
+                </div>
+
+                {/* Doctor Cards */}
+                {filteredDoctors.length === 0 ? (
+                    <div className="bg-white rounded-xl shadow-sm p-10 text-center">
+                        <h2 className="text-xl font-semibold text-gray-700">
+                            No doctors found
+                        </h2>
+
+                        <p className="text-gray-500 mt-2">
+                            Try a different search or department.
                         </p>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                        {doctors.map((doctor) => (
+                        {filteredDoctors.map((doctor) => (
                             <div
                                 key={doctor.id}
-                                className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition"
+                                className="bg-white rounded-xl shadow-sm hover:shadow-lg transition p-6"
                             >
 
-                                <div className="h-40 bg-blue-100 flex items-center justify-center">
+                                {/* Doctor Image */}
+                                <div className="flex justify-center mb-5">
                                     {doctor.profile_image ? (
                                         <img
                                             src={doctor.profile_image}
-                                            alt={`Dr. ${doctor.first_name} ${doctor.last_name}`}
-                                            className="w-28 h-28 rounded-full object-cover"
+                                            alt={`${doctor.first_name} ${doctor.last_name}`}
+                                            className="w-24 h-24 rounded-full object-cover"
                                         />
                                     ) : (
-                                        <div className="w-28 h-28 rounded-full bg-blue-600 text-white flex items-center justify-center text-3xl font-bold">
-                                            {doctor.first_name?.charAt(0)}
-                                            {doctor.last_name?.charAt(0)}
+                                        <div className="w-24 h-24 rounded-full bg-blue-100 flex items-center justify-center">
+                                            <span className="text-2xl font-bold text-blue-600">
+                                                {doctor.first_name?.[0] || "D"}
+                                            </span>
                                         </div>
                                     )}
                                 </div>
 
-                                <div className="p-6">
+                                {/* Name */}
+                                <h2 className="text-xl font-bold text-gray-800 text-center">
+                                    Dr. {doctor.first_name} {doctor.last_name}
+                                </h2>
 
-                                    <h2 className="text-xl font-bold text-gray-800">
-                                        Dr. {doctor.first_name} {doctor.last_name}
-                                    </h2>
+                                {/* Specialization */}
+                                <p className="text-blue-600 text-center mt-1 font-medium">
+                                    {doctor.specialization}
+                                </p>
 
-                                    <p className="text-blue-600 font-medium mt-1">
-                                        {doctor.specialization}
+                                {/* Details */}
+                                <div className="mt-5 space-y-2 text-sm text-gray-600">
+
+                                    <p>
+                                        <span className="font-semibold">
+                                            Department:
+                                        </span>{" "}
+                                        {doctor.department_name || "Not assigned"}
                                     </p>
 
-                                    <div className="mt-4 space-y-2 text-sm text-gray-600">
+                                    <p>
+                                        <span className="font-semibold">
+                                            Qualification:
+                                        </span>{" "}
+                                        {doctor.qualification || "Not provided"}
+                                    </p>
 
-                                        <p>
-                                            <strong>Department:</strong>{" "}
-                                            {doctor.department_name || "Not assigned"}
-                                        </p>
+                                    <p>
+                                        <span className="font-semibold">
+                                            Experience:
+                                        </span>{" "}
+                                        {doctor.experience} years
+                                    </p>
 
-                                        <p>
-                                            <strong>Qualification:</strong>{" "}
-                                            {doctor.qualification || "Not provided"}
-                                        </p>
-
-                                        <p>
-                                            <strong>Experience:</strong>{" "}
-                                            {doctor.experience} years
-                                        </p>
-
-                                        <p>
-                                            <strong>Consultation Fee:</strong>{" "}
-                                            Rs. {doctor.consultation_fee}
-                                        </p>
-
-                                    </div>
-
-                                    {doctor.bio && (
-                                        <p className="mt-4 text-sm text-gray-500 line-clamp-3">
-                                            {doctor.bio}
-                                        </p>
-                                    )}
+                                    <p>
+                                        <span className="font-semibold">
+                                            Consultation Fee:
+                                        </span>{" "}
+                                        Rs. {doctor.consultation_fee}
+                                    </p>
 
                                 </div>
+
+                                {/* Bio */}
+                                {doctor.bio && (
+                                    <p className="text-sm text-gray-500 mt-4 line-clamp-3">
+                                        {doctor.bio}
+                                    </p>
+                                )}
+
+                                {/* Appointment Button */}
+                                <button
+                                    className="w-full mt-6 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
+                                    onClick={() =>
+                                        alert("Appointment booking will be added next.")
+                                    }
+                                >
+                                    Book Appointment
+                                </button>
 
                             </div>
                         ))}
@@ -136,7 +224,6 @@ const DoctorList = () => {
                 )}
 
             </div>
-
         </div>
     );
 };

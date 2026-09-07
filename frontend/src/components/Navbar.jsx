@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-// import logo from "../assets/images/hospitalL.png";
+
+import logo from "../assets/images/hospitalL.png";
 
 const Navbar = () => {
     return (
@@ -8,9 +9,15 @@ const Navbar = () => {
                 <div className="flex justify-between items-center h-16">
 
                     {/* Hospital Logo / Name */}
-                    <h1 className="text-2xl font-bold text-blue-600">
-                        Twilight-HealthCare
-                    </h1>
+                    <div className="flex items-center">
+                        <Link to="/">
+                            <img
+                                src={logo}
+                                alt="AasPaj LifeCare Hospital Logo"
+                                className="h-53 w-65 object-contain"
+                            />
+                        </Link>
+                    </div>
 
                     {/* Navigation Links */}
                     <div className="hidden md:flex items-center space-x-8">

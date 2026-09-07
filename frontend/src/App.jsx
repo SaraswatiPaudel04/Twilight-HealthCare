@@ -9,12 +9,14 @@ import Register from "./pages/Register";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import DoctorDashboard from "./pages/doctor/DoctorDashboard";
 import PatientDashboard from "./pages/patient/PatientDashboard";
+// import BookAppointment from "./pages/patient/BookAppointment";
 import PatientProfile from "./pages/patient/PatientProfile";
 
 
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 import DoctorProfile from "./pages/doctor/DoctorProfile";
+import ReceptionistDashboard from "./pages/receptionist/ReceptionistDashboard";
 import DoctorList from "./pages/patient/DoctorList";
 
 function ProtectedRoute({ children, role }) {
@@ -80,6 +82,8 @@ function AppRoutes() {
         }
       />
 
+
+
       <Route
         path="/patient/profile"
         element={
@@ -94,6 +98,20 @@ function AppRoutes() {
         element={
           <ProtectedRoute allowedRoles={["DOCTOR"]}>
             <DoctorProfile />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* <Route
+        path="/book-appointment"
+        element={<BookAppointment />}
+      /> */}
+
+      <Route
+        path="/receptionist/dashboard"
+        element={
+          <ProtectedRoute allowedRoles={["RECEPTIONIST"]}>
+            <ReceptionistDashboard />
           </ProtectedRoute>
         }
       />

@@ -42,6 +42,8 @@ function Login() {
                 navigate("/admin/dashboard");
             } else if (role === "DOCTOR") {
                 navigate("/doctor/dashboard");
+            } else if (response.data.user.role === "RECEPTIONIST") {
+                navigate("/receptionist/dashboard");
             } else {
                 navigate("/patient/dashboard");
             }
