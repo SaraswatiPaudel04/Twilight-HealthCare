@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../../services/api";
 
 const DoctorList = () => {
     const [doctors, setDoctors] = useState([]);
     const [search, setSearch] = useState("");
     const [department, setDepartment] = useState("All");
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchDoctors();
@@ -209,10 +211,12 @@ const DoctorList = () => {
 
                                 {/* Appointment Button */}
                                 <button
-                                    className="w-full mt-6 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
                                     onClick={() =>
-                                        alert("Appointment booking will be added next.")
+                                        navigate("/patient/book-appointment", {
+                                            state: { doctor },
+                                        })
                                     }
+                                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg"
                                 >
                                     Book Appointment
                                 </button>

@@ -27,4 +27,4 @@ class MyAppointmentsView(generics.ListAPIView):
         ).order_by(
             "-appointment_date",
             "-appointment_time"
-        )
+        ) 
