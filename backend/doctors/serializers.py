@@ -29,6 +29,11 @@ class DoctorProfileSerializer(serializers.ModelSerializer):
         read_only=True,
     )
 
+    department_name = serializers.CharField(
+        source="department.name",
+        read_only=True,
+    )
+
     class Meta:
         model = DoctorProfile
 
@@ -43,6 +48,7 @@ class DoctorProfileSerializer(serializers.ModelSerializer):
             "qualification",
             "experience",
             "department",
+            "department_name",
             "consultation_fee",
             "bio",
             "profile_image",

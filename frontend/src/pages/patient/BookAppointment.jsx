@@ -59,11 +59,24 @@ const BookAppointment = () => {
             setDate("");
             setTime("");
             setReason("");
+
+            setTimeout(() => {
+                navigate("/patient/appointments");
+            }, 1500);
+            
         } catch (err) {
             console.error("Appointment booking error:", err);
 
-            if (err.response?.data?.detail) {
-                setError(err.response.data.detail);
+            const data = err.response?.data;
+
+            if (data?.detail) {
+                setError(data.detail);
+            } else if (data?.appointment_date) {
+                setError(data.appointment_date[0]);
+            } else if (data?.appointment_time) {
+                setError(data.appointment_time[0]);
+            } else if (data?.doctor) {
+                setError(data.doctor[0]);
             } else {
                 setError("Failed to book appointment. Please try again.");
             }
