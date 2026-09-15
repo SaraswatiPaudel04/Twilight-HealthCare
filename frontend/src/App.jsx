@@ -10,6 +10,7 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 
 import DoctorDashboard from "./pages/doctor/DoctorDashboard";
 import DoctorProfile from "./pages/doctor/DoctorProfile";
+import DoctorAppointments from "./pages/doctor/DoctorAppointments";
 
 import PatientDashboard from "./pages/patient/PatientDashboard";
 import PatientProfile from "./pages/patient/PatientProfile";
@@ -90,6 +91,14 @@ function AppRoutes() {
                 }
             />
 
+            <Route
+                path="/doctor/appointments"
+                element={
+                    <ProtectedRoute allowedRoles={["DOCTOR"]}>
+                        <DoctorAppointments />
+                    </ProtectedRoute>
+                }
+            />
 
             {/* Patient */}
             <Route
