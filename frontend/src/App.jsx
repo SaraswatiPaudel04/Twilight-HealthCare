@@ -17,6 +17,8 @@ import DoctorList from "./pages/patient/DoctorList";
 import BookAppointment from "./pages/patient/BookAppointment";
 
 import ReceptionistDashboard from "./pages/receptionist/ReceptionistDashboard";
+import ReceptionistAppointments from "./pages/receptionist/ReceptionistAppointments";
+import PatientAppointments from "./pages/patient/PatientAppointments";
 
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
@@ -108,6 +110,15 @@ function AppRoutes() {
                 }
             />
 
+            <Route
+                path="/patient/appointments"
+                element={
+                    <ProtectedRoute allowedRoles={["PATIENT"]}>
+                        <PatientAppointments />
+                    </ProtectedRoute>
+                }
+            />
+
             {/* Patient Doctor List */}
             <Route
                 path="/patient/doctors"
@@ -135,6 +146,15 @@ function AppRoutes() {
                 element={
                     <ProtectedRoute allowedRoles={["RECEPTIONIST"]}>
                         <ReceptionistDashboard />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/receptionist/appointments"
+                element={
+                    <ProtectedRoute allowedRoles={["RECEPTIONIST"]}>
+                        <ReceptionistAppointments />
                     </ProtectedRoute>
                 }
             />

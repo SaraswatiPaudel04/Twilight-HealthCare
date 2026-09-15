@@ -1,8 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 const ReceptionistDashboard = () => {
     const { user, logout } = useAuth();
+    const navigate = useNavigate();
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -27,6 +29,7 @@ const ReceptionistDashboard = () => {
                 </button>
             </header>
 
+
             {/* Dashboard */}
             <main className="max-w-7xl mx-auto px-6 py-8">
 
@@ -44,13 +47,17 @@ const ReceptionistDashboard = () => {
                             Register and manage patients
                         </p>
 
-                        <button className="mt-4 text-blue-600 font-medium">
+                        <button
+                            className="mt-4 text-blue-600 font-medium hover:underline"
+                        >
                             Manage Patients →
                         </button>
                     </div>
 
+
                     {/* Appointments */}
                     <div className="bg-white rounded-xl shadow-sm p-6">
+
                         <div className="text-3xl mb-3">📅</div>
 
                         <h2 className="text-lg font-semibold text-gray-800">
@@ -58,16 +65,24 @@ const ReceptionistDashboard = () => {
                         </h2>
 
                         <p className="text-gray-500 text-sm mt-1">
-                            Manage patient appointments
+                            View and manage patient appointments
                         </p>
 
-                        <button className="mt-4 text-blue-600 font-medium">
-                            View Appointments →
+                        <button
+                            onClick={() =>
+                                navigate("/receptionist/appointments")
+                            }
+                            className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg font-medium"
+                        >
+                            Manage Appointments →
                         </button>
+
                     </div>
+
 
                     {/* Doctors */}
                     <div className="bg-white rounded-xl shadow-sm p-6">
+
                         <div className="text-3xl mb-3">🩺</div>
 
                         <h2 className="text-lg font-semibold text-gray-800">
@@ -78,13 +93,18 @@ const ReceptionistDashboard = () => {
                             View doctors and departments
                         </p>
 
-                        <button className="mt-4 text-blue-600 font-medium">
+                        <button
+                            className="mt-4 text-blue-600 font-medium hover:underline"
+                        >
                             View Doctors →
                         </button>
+
                     </div>
+
 
                     {/* Billing */}
                     <div className="bg-white rounded-xl shadow-sm p-6">
+
                         <div className="text-3xl mb-3">💰</div>
 
                         <h2 className="text-lg font-semibold text-gray-800">
@@ -95,14 +115,18 @@ const ReceptionistDashboard = () => {
                             Manage patient billing
                         </p>
 
-                        <button className="mt-4 text-blue-600 font-medium">
+                        <button
+                            className="mt-4 text-blue-600 font-medium hover:underline"
+                        >
                             Manage Billing →
                         </button>
+
                     </div>
 
                 </div>
 
             </main>
+
         </div>
     );
 };
