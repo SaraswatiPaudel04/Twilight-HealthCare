@@ -41,9 +41,6 @@ function DoctorDashboard() {
 
                     {/* Appointments */}
                     <div className="bg-white rounded-2xl shadow p-6">
-                        <div className="text-4xl mb-4">
-                            📅
-                        </div>
 
                         <h2 className="text-xl font-semibold text-gray-800">
                             My Appointments
@@ -63,9 +60,6 @@ function DoctorDashboard() {
 
                     {/* Doctor Profile */}
                     <div className="bg-white rounded-2xl shadow p-6">
-                        <div className="text-4xl mb-4">
-                            👨‍⚕️
-                        </div>
 
                         <h2 className="text-xl font-semibold text-gray-800">
                             My Profile
@@ -85,9 +79,7 @@ function DoctorDashboard() {
 
                     {/* Consultation */}
                     <div className="bg-white rounded-2xl shadow p-6">
-                        <div className="text-4xl mb-4">
-                            🩺
-                        </div>
+
 
                         <h2 className="text-xl font-semibold text-gray-800">
                             Consultations
