@@ -106,3 +106,22 @@ class CancelAppointmentView(APIView):
             AppointmentSerializer(appointment).data,
             status=status.HTTP_200_OK
         )
+
+
+class DoctorAppointmentsView(generics.ListAPIView):
+    serializer_class = AppointmentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        if self.request.user.role != "DOCTOR":
+            return Appointment.objects.none()
+
+        return Appointment.objects.filter(
+            doctor__user=self.request.user
+        ).select_related(
+            "patient",
+            "doctor__user"
+        ).order_by(
+            "-appointment_date",
+            "-appointment_time"
+        )
