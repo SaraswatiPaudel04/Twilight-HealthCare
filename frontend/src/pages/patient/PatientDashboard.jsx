@@ -48,9 +48,9 @@ function PatientDashboard() {
                     {/* Find Doctor */}
                     <div className="bg-white rounded-2xl shadow p-6">
 
-                        <div className="text-4xl mb-4">
+                        {/* <div className="text-4xl mb-4">
                             🩺
-                        </div>
+                        </div> */}
 
                         <h2 className="text-xl font-semibold text-gray-800">
                             Find a Doctor
@@ -75,9 +75,9 @@ function PatientDashboard() {
                     {/* My Appointments */}
                     <div className="bg-white rounded-2xl shadow p-6">
 
-                        <div className="text-4xl mb-4">
+                        {/* <div className="text-4xl mb-4">
                             📅
-                        </div>
+                        </div> */}
 
                         <h2 className="text-xl font-semibold text-gray-800">
                             My Appointments
