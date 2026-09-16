@@ -76,9 +76,9 @@ const DoctorAppointments = () => {
                 {/* Empty */}
                 {!error && appointments.length === 0 && (
                     <div className="bg-white rounded-xl shadow-sm p-10 text-center">
-                        <div className="text-5xl mb-4">
+                        {/* <div className="text-5xl mb-4">
                             📅
-                        </div>
+                        </div> */}
 
                         <h2 className="text-xl font-semibold text-gray-700">
                             No appointments found
@@ -102,9 +102,9 @@ const DoctorAppointments = () => {
                                 {/* Patient */}
                                 <div className="flex items-center gap-4 mb-5">
                                     <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
-                                        <span className="text-xl">
+                                        {/* <span className="text-xl">
                                             👤
-                                        </span>
+                                        </span> */}
                                     </div>
 
                                     <div>

@@ -93,7 +93,7 @@ function DoctorDashboard() {
                             onClick={() => navigate("/doctor/appointments")}
                             className="mt-5 w-full bg-purple-600 hover:bg-purple-700 text-white py-2.5 rounded-lg font-medium"
                         >
-                            Start Consultation →
+                            Start Consultation
                         </button>
                     </div>
 
