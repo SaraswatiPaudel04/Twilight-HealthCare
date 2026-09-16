@@ -37,7 +37,7 @@ const ReceptionistDashboard = () => {
 
                     {/* Patients */}
                     <div className="bg-white rounded-xl shadow-sm p-6">
-                        <div className="text-3xl mb-3">👥</div>
+                        {/* <div className="text-3xl mb-3">👥</div> */}
 
                         <h2 className="text-lg font-semibold text-gray-800">
                             Patients
@@ -83,7 +83,7 @@ const ReceptionistDashboard = () => {
                     {/* Doctors */}
                     <div className="bg-white rounded-xl shadow-sm p-6">
 
-                        <div className="text-3xl mb-3">🩺</div>
+                        {/* <div className="text-3xl mb-3">🩺</div> */}
 
                         <h2 className="text-lg font-semibold text-gray-800">
                             Doctors
@@ -96,7 +96,7 @@ const ReceptionistDashboard = () => {
                         <button
                             className="mt-4 text-blue-600 font-medium hover:underline"
                         >
-                            View Doctors →
+                            View Doctors 
                         </button>
 
                     </div>
