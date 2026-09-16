@@ -118,7 +118,7 @@ const ReceptionistDashboard = () => {
                         <button
                             className="mt-4 text-blue-600 font-medium hover:underline"
                         >
-                            Manage Billing →
+                            Manage Billing 
                         </button>
 
                     </div>
