@@ -66,7 +66,7 @@ function PatientDashboard() {
                             }
                             className="mt-5 w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-medium"
                         >
-                            View Doctors →
+                            View Doctors
                         </button>
 
                     </div>
@@ -93,7 +93,7 @@ function PatientDashboard() {
                             }
                             className="mt-5 w-full bg-green-600 hover:bg-green-700 text-white py-2.5 rounded-lg font-medium"
                         >
-                            View Appointments →
+                            View Appointments
                         </button>
 
                     </div>
@@ -102,9 +102,9 @@ function PatientDashboard() {
                     {/* Patient Profile */}
                     <div className="bg-white rounded-2xl shadow p-6">
 
-                        <div className="text-4xl mb-4">
+                        {/* <div className="text-4xl mb-4">
                             👤
-                        </div>
+                        </div> */}
 
                         <h2 className="text-xl font-semibold text-gray-800">
                             My Profile
@@ -120,7 +120,7 @@ function PatientDashboard() {
                             }
                             className="mt-5 w-full bg-purple-600 hover:bg-purple-700 text-white py-2.5 rounded-lg font-medium"
                         >
-                            View Profile →
+                            View Profile
                         </button>
 
                     </div>
