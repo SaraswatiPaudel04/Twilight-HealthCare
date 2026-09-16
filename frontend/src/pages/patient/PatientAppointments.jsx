@@ -214,25 +214,25 @@ const PatientAppointments = () => {
 
                                     {appointment.status === "PENDING" && (
                                         <p className="text-yellow-700 bg-yellow-50 px-4 py-3 rounded-lg">
-                                            ⏳ Your appointment is waiting for receptionist confirmation.
+                                             Your appointment is waiting for receptionist confirmation.
                                         </p>
                                     )}
 
                                     {appointment.status === "CONFIRMED" && (
                                         <p className="text-green-700 bg-green-50 px-4 py-3 rounded-lg">
-                                            ✅ Your appointment has been confirmed.
+                                             Your appointment has been confirmed.
                                         </p>
                                     )}
 
                                     {appointment.status === "CANCELLED" && (
                                         <p className="text-red-700 bg-red-50 px-4 py-3 rounded-lg">
-                                            ❌ Your appointment has been cancelled.
+                                             Your appointment has been cancelled.
                                         </p>
                                     )}
 
                                     {appointment.status === "COMPLETED" && (
                                         <p className="text-blue-700 bg-blue-50 px-4 py-3 rounded-lg">
-                                            ✔️ Your appointment has been completed.
+                                             Your appointment has been completed.
                                         </p>
                                     )}
 
