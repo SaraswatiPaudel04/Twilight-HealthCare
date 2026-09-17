@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 
 import Home from "./pages/Home";
+import DoctorList from "./pages/patient/DoctorList";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
@@ -14,7 +15,6 @@ import DoctorAppointments from "./pages/doctor/DoctorAppointments";
 
 import PatientDashboard from "./pages/patient/PatientDashboard";
 import PatientProfile from "./pages/patient/PatientProfile";
-import DoctorList from "./pages/patient/DoctorList";
 import BookAppointment from "./pages/patient/BookAppointment";
 
 import ReceptionistDashboard from "./pages/receptionist/ReceptionistDashboard";
@@ -48,6 +48,8 @@ function AppRoutes() {
                 path="/"
                 element={<Home />}
             />
+
+            <Route path="/doctors" element={<DoctorList />} />
 
             {/* Authentication */}
             <Route
@@ -100,6 +102,8 @@ function AppRoutes() {
                 }
             />
 
+            <Route path="/doctors" element={<DoctorList />} />
+
             {/* Patient */}
             <Route
                 path="/patient/dashboard"
@@ -129,14 +133,14 @@ function AppRoutes() {
             />
 
             {/* Patient Doctor List */}
-            <Route
+            {/* <Route
                 path="/patient/doctors"
                 element={
                     <ProtectedRoute allowedRoles={["PATIENT"]}>
                         <DoctorList />
                     </ProtectedRoute>
                 }
-            />
+            /> */}
 
             {/* Patient Book Appointment */}
             <Route

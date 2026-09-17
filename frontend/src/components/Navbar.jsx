@@ -29,6 +29,7 @@ const Navbar = () => {
                             Home
                         </Link>
 
+
                         <Link
                             to="/doctors"
                             className="text-gray-700 hover:text-blue-600 font-medium"
