@@ -4,34 +4,48 @@ import Navbar from "./components/Navbar";
 
 import Home from "./pages/Home";
 import DoctorList from "./pages/patient/DoctorList";
+
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
+// Admin
 import AdminDashboard from "./pages/admin/AdminDashboard";
 
+// Doctor
 import DoctorDashboard from "./pages/doctor/DoctorDashboard";
 import DoctorProfile from "./pages/doctor/DoctorProfile";
 import DoctorAppointments from "./pages/doctor/DoctorAppointments";
 
+// Patient
 import PatientDashboard from "./pages/patient/PatientDashboard";
 import PatientProfile from "./pages/patient/PatientProfile";
+import PatientAppointments from "./pages/patient/PatientAppointments";
 import BookAppointment from "./pages/patient/BookAppointment";
 
+// Receptionist
 import ReceptionistDashboard from "./pages/receptionist/ReceptionistDashboard";
 import ReceptionistAppointments from "./pages/receptionist/ReceptionistAppointments";
-import PatientAppointments from "./pages/patient/PatientAppointments";
 
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
 
+/* =====================================================
+   PROTECTED ROUTE
+===================================================== */
+
 function ProtectedRoute({ children, allowedRoles }) {
     const { user, isAuthenticated } = useAuth();
 
+    // User is not logged in
     if (!isAuthenticated) {
         return <Navigate to="/login" replace />;
     }
 
-    if (allowedRoles && !allowedRoles.includes(user?.role)) {
+    // User does not have permission
+    if (
+        allowedRoles &&
+        !allowedRoles.includes(user?.role)
+    ) {
         return <Navigate to="/" replace />;
     }
 
@@ -39,19 +53,38 @@ function ProtectedRoute({ children, allowedRoles }) {
 }
 
 
+/* =====================================================
+   ALL APPLICATION ROUTES
+===================================================== */
+
 function AppRoutes() {
     return (
         <Routes>
 
-            {/* Home */}
+            {/* =================================================
+                HOME
+            ================================================= */}
+
             <Route
                 path="/"
                 element={<Home />}
             />
 
-            <Route path="/doctors" element={<DoctorList />} />
 
-            {/* Authentication */}
+            {/* =================================================
+                PUBLIC DOCTORS PAGE
+            ================================================= */}
+
+            <Route
+                path="/doctors"
+                element={<DoctorList />}
+            />
+
+
+            {/* =================================================
+                AUTHENTICATION
+            ================================================= */}
+
             <Route
                 path="/login"
                 element={<Login />}
@@ -63,22 +96,32 @@ function AppRoutes() {
             />
 
 
-            {/* Admin */}
+            {/* =================================================
+                ADMIN
+            ================================================= */}
+
             <Route
                 path="/admin/dashboard"
                 element={
-                    <ProtectedRoute allowedRoles={["ADMIN"]}>
+                    <ProtectedRoute
+                        allowedRoles={["ADMIN"]}
+                    >
                         <AdminDashboard />
                     </ProtectedRoute>
                 }
             />
 
 
-            {/* Doctor */}
+            {/* =================================================
+                DOCTOR
+            ================================================= */}
+
             <Route
                 path="/doctor/dashboard"
                 element={
-                    <ProtectedRoute allowedRoles={["DOCTOR"]}>
+                    <ProtectedRoute
+                        allowedRoles={["DOCTOR"]}
+                    >
                         <DoctorDashboard />
                     </ProtectedRoute>
                 }
@@ -87,7 +130,9 @@ function AppRoutes() {
             <Route
                 path="/doctor/profile"
                 element={
-                    <ProtectedRoute allowedRoles={["DOCTOR"]}>
+                    <ProtectedRoute
+                        allowedRoles={["DOCTOR"]}
+                    >
                         <DoctorProfile />
                     </ProtectedRoute>
                 }
@@ -96,19 +141,25 @@ function AppRoutes() {
             <Route
                 path="/doctor/appointments"
                 element={
-                    <ProtectedRoute allowedRoles={["DOCTOR"]}>
+                    <ProtectedRoute
+                        allowedRoles={["DOCTOR"]}
+                    >
                         <DoctorAppointments />
                     </ProtectedRoute>
                 }
             />
 
-            <Route path="/doctors" element={<DoctorList />} />
 
-            {/* Patient */}
+            {/* =================================================
+                PATIENT
+            ================================================= */}
+
             <Route
                 path="/patient/dashboard"
                 element={
-                    <ProtectedRoute allowedRoles={["PATIENT"]}>
+                    <ProtectedRoute
+                        allowedRoles={["PATIENT"]}
+                    >
                         <PatientDashboard />
                     </ProtectedRoute>
                 }
@@ -117,7 +168,9 @@ function AppRoutes() {
             <Route
                 path="/patient/profile"
                 element={
-                    <ProtectedRoute allowedRoles={["PATIENT"]}>
+                    <ProtectedRoute
+                        allowedRoles={["PATIENT"]}
+                    >
                         <PatientProfile />
                     </ProtectedRoute>
                 }
@@ -126,38 +179,41 @@ function AppRoutes() {
             <Route
                 path="/patient/appointments"
                 element={
-                    <ProtectedRoute allowedRoles={["PATIENT"]}>
+                    <ProtectedRoute
+                        allowedRoles={["PATIENT"]}
+                    >
                         <PatientAppointments />
                     </ProtectedRoute>
                 }
             />
 
-            {/* Patient Doctor List */}
-            {/* <Route
-                path="/patient/doctors"
-                element={
-                    <ProtectedRoute allowedRoles={["PATIENT"]}>
-                        <DoctorList />
-                    </ProtectedRoute>
-                }
-            /> */}
 
-            {/* Patient Book Appointment */}
+            {/* =================================================
+                PATIENT → BOOK APPOINTMENT
+            ================================================= */}
+
             <Route
-                path="/patient/book-appointment"
+                path="/patient/book-appointment/:doctorId"
                 element={
-                    <ProtectedRoute allowedRoles={["PATIENT"]}>
+                    <ProtectedRoute
+                        allowedRoles={["PATIENT"]}
+                    >
                         <BookAppointment />
                     </ProtectedRoute>
                 }
             />
 
 
-            {/* Receptionist */}
+            {/* =================================================
+                RECEPTIONIST
+            ================================================= */}
+
             <Route
                 path="/receptionist/dashboard"
                 element={
-                    <ProtectedRoute allowedRoles={["RECEPTIONIST"]}>
+                    <ProtectedRoute
+                        allowedRoles={["RECEPTIONIST"]}
+                    >
                         <ReceptionistDashboard />
                     </ProtectedRoute>
                 }
@@ -166,17 +222,27 @@ function AppRoutes() {
             <Route
                 path="/receptionist/appointments"
                 element={
-                    <ProtectedRoute allowedRoles={["RECEPTIONIST"]}>
+                    <ProtectedRoute
+                        allowedRoles={["RECEPTIONIST"]}
+                    >
                         <ReceptionistAppointments />
                     </ProtectedRoute>
                 }
             />
 
 
-            {/* Unknown URL */}
+            {/* =================================================
+                UNKNOWN URL
+            ================================================= */}
+
             <Route
                 path="*"
-                element={<Navigate to="/" replace />}
+                element={
+                    <Navigate
+                        to="/"
+                        replace
+                    />
+                }
             />
 
         </Routes>
@@ -184,16 +250,24 @@ function AppRoutes() {
 }
 
 
+/* =====================================================
+   MAIN APP
+===================================================== */
+
 function App() {
     return (
         <BrowserRouter>
+
             <AuthProvider>
+
                 <Navbar />
+
                 <AppRoutes />
+
             </AuthProvider>
+
         </BrowserRouter>
     );
 }
-
 
 export default App;
